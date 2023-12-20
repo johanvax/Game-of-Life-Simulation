@@ -7,38 +7,46 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class Gameoflife extends JFrame implements KeyListener {
+public class Gameoflife implements KeyListener {
 
-    public static final String title = "Game of Life - Simulation";
+    public static final String title = "Game of Life Simulation - Hold enter or press space";
     private Game game;
     private JLabel squares[][];
     private int gridDim1;
     private int gridDim2;
+    private JFrame frame;
 
-    public Gameoflife(int gridDim1, int gridDim2) {
+    private Color alive;
+    private Color dead;
+
+    public Gameoflife(int gridDim1, int gridDim2, Color alive, Color dead) {
         this.gridDim1 = gridDim1;
         this.gridDim2 = gridDim2;
+        this.alive = alive;
+        this.dead = dead;
         game = new Game(gridDim1, gridDim2);
-        setTitle(title);
-        setSize(800, 800);
-        setLayout(new GridLayout(gridDim1, gridDim2));
-        addKeyListener(this);
-        setFocusable(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         squares = new JLabel[gridDim1][gridDim2];
-
+        frame = new JFrame();
+        setup();
     }
 
     public void start() {
         render(game.getGrid());
         for (int i = 0; i < gridDim1; i++) {
             for (int j = 0; j < gridDim2; j++) {
-                add(squares[i][j]);
+                frame.add(squares[i][j]);
             }
         }
-        setVisible(true);
+        frame.setVisible(true);
+    }
 
+    private void setup() {
+        frame.setTitle(title);
+        frame.setSize(gridDim2*10, gridDim1*10);
+        frame.setLayout(new GridLayout(gridDim1, gridDim2));
+        frame.addKeyListener(this);
+        frame.setFocusable(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void render(int[][] grid) {
@@ -47,15 +55,14 @@ public class Gameoflife extends JFrame implements KeyListener {
                 squares[i][j] = new JLabel();
                 squares[i][j].setOpaque(true);
                 if (grid[i][j] == 0) {
-                    squares[i][j].setBackground(Color.blue);
+                    squares[i][j].setBackground(dead);
                 } else {
-                    squares[i][j].setBackground(Color.orange);
+                    squares[i][j].setBackground(alive);
                 }
 
                 squares[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
             }
         }
-
     }
 
     private void boardUpdate() {
@@ -63,18 +70,16 @@ public class Gameoflife extends JFrame implements KeyListener {
         for (int i = 0; i < gridDim1; i++) {
             for (int j = 0; j < gridDim2; j++) {
                 if (grid[i][j] == 0) {
-                    squares[i][j].setBackground(Color.blue);
+                    squares[i][j].setBackground(dead);
                 } else {
-                    squares[i][j].setBackground(Color.orange);
+                    squares[i][j].setBackground(alive);
                 }
-
             }
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
