@@ -37,7 +37,13 @@ public class Start implements MouseListener{
     }
 
     private void begin(String[] args) {
-        Gameoflife gameoflife = new Gameoflife(Integer.valueOf(args[0]), Integer.valueOf(args[1]), aliveColor, deadColor);
+        int probability = 29;
+        if (args.length == 3) {
+            if (Integer.valueOf(args[2]) >= 0 || Integer.valueOf(args[2]) <= 100) {
+                probability = Integer.valueOf(args[2]);
+            }
+        }
+        Gameoflife gameoflife = new Gameoflife(Integer.valueOf(args[0]), Integer.valueOf(args[1]), aliveColor, deadColor, probability);
         gameoflife.start();
     }
 

@@ -19,18 +19,18 @@ public class Gameoflife implements KeyListener {
     private Color alive;
     private Color dead;
 
-    public Gameoflife(int gridDim1, int gridDim2, Color alive, Color dead) {
+    public Gameoflife(int gridDim1, int gridDim2, Color alive, Color dead, int probability) {
         this.gridDim1 = gridDim1;
         this.gridDim2 = gridDim2;
         this.alive = alive;
         this.dead = dead;
-        game = new Game(gridDim1, gridDim2);
+        game = new Game(gridDim1, gridDim2, probability);
         squares = new JLabel[gridDim1][gridDim2];
         frame = new JFrame();
-        setup();
     }
 
     public void start() {
+        setup();
         render(game.getGrid());
         for (int i = 0; i < gridDim1; i++) {
             for (int j = 0; j < gridDim2; j++) {
@@ -47,6 +47,7 @@ public class Gameoflife implements KeyListener {
         frame.addKeyListener(this);
         frame.setFocusable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.init();
     }
 
     private void render(int[][] grid) {

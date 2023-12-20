@@ -7,16 +7,24 @@ public class Game {
     private int gridDim2;
     private int[][] grid;
     private int[][] next;
+    private int probability;
 
-    public Game(int gridDim1, int gridDim2) {
+    public Game(int gridDim1, int gridDim2, int probability) {
         this.random = new Random();
         this.grid = new int[gridDim1][gridDim2];
         this.gridDim1 = gridDim1;
         this.gridDim2 = gridDim2;
+        this.probability = probability;
+    }
 
+    public void init() {
         for (int i = 0; i < gridDim1; i++) {
             for (int k = 0; k < gridDim2; k++) {
-                grid[i][k] = random.nextInt(2);
+                if (random.nextInt(100) <= probability) {
+                    grid[i][k] = 1;
+                } else {
+                    grid[i][k] = 0;
+                }
             }
         }
     }
@@ -51,19 +59,10 @@ public class Game {
                         next[i][k] = 0;
                     }
                 }
-
             }
         }
         grid = next;
         return next;
-    }
-
-    public int getWidth() {
-        return gridDim1;
-    }
-
-    public int getHeight() {
-        return gridDim2;
     }
 
     public int[][] getGrid() {
