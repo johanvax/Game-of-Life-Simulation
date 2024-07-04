@@ -19,6 +19,8 @@ public class Gameoflife implements KeyListener {
     private Color alive;
     private Color dead;
 
+    private boolean enterPressed = false;
+
     public Gameoflife(int gridDim1, int gridDim2, Color alive, Color dead, int probability) {
         this.gridDim1 = gridDim1;
         this.gridDim2 = gridDim2;
@@ -85,6 +87,7 @@ public class Gameoflife implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        enterPressed = true;
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             boardUpdate();
         }
@@ -92,6 +95,10 @@ public class Gameoflife implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if (enterPressed) {
+            boardUpdate();
+            enterPressed = false;
+        }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             boardUpdate();
         }
